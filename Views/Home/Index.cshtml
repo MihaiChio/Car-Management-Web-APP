@@ -1,0 +1,39 @@
+﻿@model WebApplication1MVC.Models.ViewModels.homeVM
+
+<div class="container">
+    <div class="text-center">
+        <button class="btn btn-dark filter-button" data-fillter="all">All categories</button>
+        @foreach(var obj in Model.categories) //creating a button for each category. 
+        {
+        <button class="btn btn-outline-secondary filter-button" data-filter="@obj.name.Replace(' ','_')">@obj.name</button>// "name.replace is used because empty space cannot used within the data filter".
+        }
+    </div>
+    <br />
+    <div class="row">
+         @foreach (var prod in Model.products)
+         {
+             <partial name="_individualProductCard" model="prod" />
+             //display all products.
+         }
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>//Jquery code to allow the filter button to work.
+        $(document).ready(function () {
+            $(".filter-button").click(function () { //when the filter button is cliked.
+                var value = $(this).attr('data-filter'); //getting the data filter.
+                if (value == "all") {
+                    $('.filter').show('1000'); // this works with the filter class that was done above in "data-filter".
+                }
+                else {
+                    $(".filter").not('.' + value).hide('3000');
+                    $(".filter").filter('.' + value).show('3000');
+
+                }
+            });
+        });
+    </script>
+}

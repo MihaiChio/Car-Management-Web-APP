@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ApplicationType>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Application List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-controller="ApplicationType" asp-action="Create" class="btn btn-outline-primary">
+                <i class="fas fa-plus"></i>&nbsp;  New Application
+            </a>
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-bordered table-striped" stype="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                       Application Type
+                    </th>
+                    <th class="text-center">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td width="50%">@obj.Name</td>
+                        <td class="text-center w-25">
+                            <div class="w-auto btn-group" role="group">
+                                <a asp-controller="ApplicationType" asp-route-_id="@obj.iD" asp-action="Edit" class="btn btn-outline-primary w-auto ">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                @*the asp-route-[name] will have to match the function paramter in the controller. Don't ask why.'*@
+                                <a asp-controller="ApplicationType" asp-route-id="@obj.iD" asp-action="Delete" class="btn btn-outline-danger w-auto">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No category exists at the moment, check back later.</p>
+    }
+
+</div>
+

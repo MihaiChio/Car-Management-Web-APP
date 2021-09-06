@@ -1,0 +1,84 @@
+﻿@model WebApplication1MVC.Models.Category
+
+<form method="post" asp-action="DeletePost" id="deleteForm">
+    <input asp-for="Id" hidden/>
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-info pl-3">Delete Category</h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="name" disabled class="form-control" />
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="displayOrder"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="displayOrder" disabled class="form-control" />
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            <input type="button"onclick="deleteCofirm()" class="btn btn-outline-danger w-100" value="Delete" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class=" btn btn-outline-primary w-100">Back</a> @*no controller needs to be mentioned when going on the same page. *@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @* Keep this empty *@
+            </div>
+        </div>
+    </div>
+
+</form>
+
+@section Scripts
+{
+    @*inside the validation script partial we have the js scripts.This will help with the client side validation*@
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+<script>
+    function deleteCofirm() {
+
+        const form = document.getElementById('deleteForm');
+        //referencing the form from this document.
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+                setTimeout(function () {
+                    form.submit(); //submitting the form only if the result is true. 
+                }, 1000);
+            }
+        })
+    }
+</script>
+}
